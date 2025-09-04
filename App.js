@@ -15,10 +15,12 @@ import UserAttendanceLog from './screens/UserAttendanceLog';
 import SettingsScreen from './screens/SettingsScreen';
 import VerificationScreen from './screens/VerificationScreen';
 import AuthScreen from './screens/AuthScreen';
+import CreateUserScreen from './screens/CreateUserScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator(); // Create the Drawer
+const AdminStack = createNativeStackNavigator();
 
 // --- The Tab Navigators remain the same ---
 
@@ -54,6 +56,25 @@ function AdminTabs({ navigation }) { // Receive navigation prop
   );
 }
 
+function AdminNavigator() {
+  return (
+    <AdminStack.Navigator>
+      {/* The first screen in the stack IS the entire tab navigator */}
+      <AdminStack.Screen
+        name="AdminRoot" // Give it a unique name
+        component={AdminTabs}
+        options={{ headerShown: false }} // We don't want a header here
+      />
+      {/* The second screen is the one we want to navigate to */}
+      <AdminStack.Screen
+        name="CreateUser"
+        component={CreateUserScreen}
+        options={{ title: 'Create New User' }} // This screen will have a header
+      />
+    </AdminStack.Navigator>
+  );
+}
+
 // --- NEW: The Main Drawer Navigator ---
 // This is the main navigator when a user is logged in.
 // It receives the onLogout function to pass to the Settings screen.
@@ -66,7 +87,7 @@ function MainDrawer({ userRole, onLogout }) {
         {/* We use a function to pass props down to the Tab Navigators */}
         {(props) => (
           userRole === 'admin'
-            ? <AdminTabs {...props} />
+            ? <AdminNavigator {...props} />
             : <UserTabs {...props} />
         )}
       </Drawer.Screen>
