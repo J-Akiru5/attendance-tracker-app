@@ -7,13 +7,14 @@ import { createDrawerNavigator } from '@react-navigation/drawer'; // Import Draw
 
 // Import all screens
 import SplashScreen from './screens/SplashScreen';
-import LoginScreen from './screens/LoginScreen';
 import AdminDashboard from './screens/AdminDashboard';
 import UserListScreen from './screens/UserListScreen';
 import AttendanceReportScreen from './screens/AttendanceReportScreen';
 import UserDashboard from './screens/UserDashboard';
 import UserAttendanceLog from './screens/UserAttendanceLog';
-import SettingsScreen from './screens/SettingsScreen'; // Import the new screen
+import SettingsScreen from './screens/SettingsScreen';
+import VerificationScreen from './screens/VerificationScreen';
+import AuthScreen from './screens/AuthScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -94,7 +95,7 @@ export default function App() {
     setIsLoggedIn(true);
   };
 
-  // Create the logout handler
+  // Create the logout handler to pass to Settings
   const handleLogout = () => {
     setUserRole(null);
     setIsLoggedIn(false);
@@ -111,9 +112,13 @@ export default function App() {
         <MainDrawer userRole={userRole} onLogout={handleLogout} />
       ) : (
         // If not logged in, show the Login Stack
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Login">
-            {(props) => <LoginScreen {...props} onLogin={handleLogin} />}
+        <Stack.Navigator
+          initialRouteName='Auth'
+          screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Auth" component={AuthScreen} />
+          {/* Pass the onLogin function to VerificationScreen */}
+          <Stack.Screen name="Verification">
+            {(props) => <VerificationScreen {...props} onLogin={handleLogin} />}
           </Stack.Screen>
         </Stack.Navigator>
       )}

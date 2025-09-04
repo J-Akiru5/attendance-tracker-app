@@ -5,7 +5,7 @@ import { Camera } from 'expo-camera';
 
 // Note: We have removed useState and useEffect as they are no longer needed for permissions on load.
 
-const LoginScreen = ({ navigation, onLogin }) => {
+const VerificationScreen = ({ navigation, onLogin }) => {
 
   // This new function will handle the entire login attempt process
   const handleLoginAttempt = async (role) => {
@@ -110,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default VerificationScreen;
