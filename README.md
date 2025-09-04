@@ -60,4 +60,4 @@ To run this project in a development environment, follow these steps:
 
 ### Author
 
-*   **[Your Name]** - BSIT Student
+*   **Jeff Martinez** - BSIT Student
